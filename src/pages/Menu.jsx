@@ -1,3 +1,4 @@
+import { useState } from "react";
 import americano from "../assets/menu/Americano.png";
 import spanishLatte from "../assets/menu/Spanish Latte.png";
 import cappuccino from "../assets/menu/Cappuccino.png";
@@ -17,139 +18,162 @@ import donut from "../assets/menu/Donut.png";
 import cookiesDessert from "../assets/menu/Cookies.png";
 
 function Menu() {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const menuSections = [
+    {
+      title: "Coffee (Hot & Iced)",
+      items: [
+        {
+          img: americano,
+          title: "Americano",
+          desc: "Smooth espresso with hot water",
+          price: "₱90",
+        },
+        {
+          img: spanishLatte,
+          title: "Spanish Latte",
+          desc: "Sweet creamy espresso drink",
+          price: "₱130",
+        },
+        {
+          img: cappuccino,
+          title: "Cappuccino",
+          desc: "Rich espresso with milk foam",
+          price: "₱120",
+        },
+        {
+          img: matchaLatte,
+          title: "Matcha Latte",
+          desc: "Creamy green tea latte",
+          price: "₱140",
+        },
+        {
+          img: caramelMacchiato,
+          title: "Caramel Macchiato",
+          desc: "Espresso with caramel drizzle",
+          price: "₱150",
+        },
+      ],
+    },
+    {
+      title: "Frappe",
+      items: [
+        {
+          img: mocha,
+          title: "Mocha Frappe",
+          desc: "Chocolate coffee blend",
+          price: "₱140",
+        },
+        {
+          img: caramel,
+          title: "Caramel Frappe",
+          desc: "Sweet caramel ice blend",
+          price: "₱140",
+        },
+        {
+          img: strawberry,
+          title: "Strawberry Frappe",
+          desc: "Sweet strawberry blended drink",
+          price: "₱145",
+        },
+        {
+          img: cookiesCream,
+          title: "Cookies & Cream",
+          desc: "Crushed cookies blended",
+          price: "₱150",
+        },
+        {
+          img: matchaFrappe,
+          title: "Matcha Frappe",
+          desc: "Green tea ice blend",
+          price: "₱150",
+        },
+      ],
+    },
+    {
+      title: "Dessert",
+      items: [
+        {
+          img: cheesecake,
+          title: "Cheesecake",
+          desc: "Creamy classic cake",
+          price: "₱150",
+        },
+        {
+          img: brownie,
+          title: "Brownie",
+          desc: "Chocolate fudge square",
+          price: "₱80",
+        },
+        {
+          img: croissant,
+          title: "Croissant",
+          desc: "Buttery pastry",
+          price: "₱90",
+        },
+        {
+          img: donut,
+          title: "Donut",
+          desc: "Sweet glazed bread",
+          price: "₱70",
+        },
+        {
+          img: cookiesDessert,
+          title: "Cookies",
+          desc: "Fresh baked cookies",
+          price: "₱60",
+        },
+      ],
+    },
+  ];
+
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+  const filteredSections = menuSections
+    .map((section) => ({
+      ...section,
+      items: section.items.filter((item) => {
+        const text = `${item.title} ${item.desc}`.toLowerCase();
+        return text.includes(normalizedSearch);
+      }),
+    }))
+    .filter((section) => section.items.length > 0);
+
   return (
     <section className="menu">
       <div className="menu-container">
-
         <h2>Our Menu</h2>
         <p>Fresh drinks and desserts made with love ☕</p>
 
-        {/* COFFEE */}
-        <h3 className="menu-category">Coffee (Hot & Iced)</h3>
-
-        <div className="menu-grid">
-
-          <div className="menu-card">
-            <img src={americano} alt="Americano" />
-            <h4>Americano</h4>
-            <p>Smooth espresso with hot water</p>
-            <span>₱90</span>
-          </div>
-
-          <div className="menu-card">
-            <img src={spanishLatte} alt="Spanish Latte" />
-            <h4>Spanish Latte</h4>
-            <p>Sweet creamy espresso drink</p>
-            <span>₱130</span>
-          </div>
-
-          <div className="menu-card">
-            <img src={cappuccino} alt="Cappuccino" />
-            <h4>Cappuccino</h4>
-            <p>Rich espresso with milk foam</p>
-            <span>₱120</span>
-          </div>
-
-          <div className="menu-card">
-            <img src={matchaLatte} alt="Matcha Latte" />
-            <h4>Matcha Latte</h4>
-            <p>Creamy green tea latte</p>
-            <span>₱140</span>
-          </div>
-
-          <div className="menu-card">
-            <img src={caramelMacchiato} alt="Caramel Macchiato" />
-            <h4>Caramel Macchiato</h4>
-            <p>Espresso with caramel drizzle</p>
-            <span>₱150</span>
-          </div>
-
+        <div className="menu-search">
+          <input
+            type="search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search drinks and desserts..."
+            aria-label="Search menu"
+          />
         </div>
 
-        {/* FRAPPE */}
-        <h3 className="menu-category">Frappe</h3>
-
-        <div className="menu-grid">
-
-          <div className="menu-card">
-            <img src={mocha} alt="Mocha Frappe" />
-            <h4>Mocha Frappe</h4>
-            <p>Chocolate coffee blend</p>
-            <span>₱140</span>
-          </div>
-
-          <div className="menu-card">
-            <img src={caramel} alt="Caramel Frappe" />
-            <h4>Caramel Frappe</h4>
-            <p>Sweet caramel ice blend</p>
-            <span>₱140</span>
-          </div>
-
-          <div className="menu-card">
-            <img src={strawberry} alt="Strawberry Frappe" />
-            <h4>Strawberry Frappe</h4>
-            <p>Sweet strawberry blended drink</p>
-            <span>₱145</span>
-          </div>
-
-          <div className="menu-card">
-            <img src={cookiesCream} alt="Cookies and Cream Frappe" />
-            <h4>Cookies & Cream</h4>
-            <p>Crushed cookies blended</p>
-            <span>₱150</span>
-          </div>
-
-          <div className="menu-card">
-            <img src={matchaFrappe} alt="Matcha Frappe" />
-            <h4>Matcha Frappe</h4>
-            <p>Green tea ice blend</p>
-            <span>₱150</span>
-          </div>
-
-        </div>
-
-        {/* DESSERT */}
-        <h3 className="menu-category">Dessert</h3>
-
-        <div className="menu-grid">
-
-          <div className="menu-card">
-            <img src={cheesecake} alt="Cheesecake" />
-            <h4>Cheesecake</h4>
-            <p>Creamy classic cake</p>
-            <span>₱150</span>
-          </div>
-
-          <div className="menu-card">
-            <img src={brownie} alt="Brownie" />
-            <h4>Brownie</h4>
-            <p>Chocolate fudge square</p>
-            <span>₱80</span>
-          </div>
-
-          <div className="menu-card">
-            <img src={croissant} alt="Croissant" />
-            <h4>Croissant</h4>
-            <p>Buttery pastry</p>
-            <span>₱90</span>
-          </div>
-
-          <div className="menu-card">
-            <img src={donut} alt="Donut" />
-            <h4>Donut</h4>
-            <p>Sweet glazed bread</p>
-            <span>₱70</span>
-          </div>
-
-          <div className="menu-card">
-            <img src={cookiesDessert} alt="Cookies" />
-            <h4>Cookies</h4>
-            <p>Fresh baked cookies</p>
-            <span>₱60</span>
-          </div>
-
-        </div>
-
+        {filteredSections.length === 0 ? (
+          <p className="menu-no-results">No items match your search.</p>
+        ) : (
+          filteredSections.map((section) => (
+            <div key={section.title}>
+              <h3 className="menu-category">{section.title}</h3>
+              <div className="menu-grid">
+                {section.items.map((item) => (
+                  <div className="menu-card" key={item.title}>
+                    <img src={item.img} alt={item.title} />
+                    <h4>{item.title}</h4>
+                    <p>{item.desc}</p>
+                    <span>{item.price}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </section>
   );
